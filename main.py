@@ -4,6 +4,7 @@ from ultralytics import YOLO
 model = YOLO('yolov8n.pt')  # load an official model
 model = YOLO('model.pt')  # load a custom model
 import pyautogui
+pyautogui.FAILSAFE = False
 import math
 import time
 import random
@@ -43,10 +44,10 @@ for i in results:
         bbox = i.boxes.xyxy[nearest]
         x1, y1, x2, y2 = bbox[0].item(), bbox[1].item(), bbox[2].item(), bbox[3].item()
     
-        pyautogui.moveTo(math.ceil((x1+x2)/2), math.ceil((y1+y2)/2), 1, pyautogui.easeInOutQuad)
+        pyautogui.moveTo(math.ceil((x1+x2)/2), math.ceil((y1+y2)/2), 0.5, pyautogui.easeInOutQuad)
         pyautogui.click()
-        time.sleep(3)
-        pyautogui.moveTo(math.ceil((1920)/2)+random.choice(range(1, 100)), math.ceil((1080/2)+random.choice(range(1, 100))), 0.9, pyautogui.easeInOutQuad)
+        time.sleep(2)
+        # pyautogui.moveTo(math.ceil((1920)/2)+random.choice(range(1, 100)), math.ceil((1080/2)+random.choice(range(1, 100))), 0.9, pyautogui.easeInOutQuad)
 
         
     # else:
