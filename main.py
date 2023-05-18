@@ -56,6 +56,8 @@ def run(result):
     #     time.sleep(3)
     #     random_move()
 
+def mount_up():
+    pyautogui.press("a")
         
 while True:
     image = pyautogui.screenshot()
