@@ -74,7 +74,7 @@ while True:
             pyautogui.easeInOutQuad,
         )
         pyautogui.click()
-        
+        log_work(f"{x1}, {y1}, {x2}, {y2}")
         time.sleep(2)
         a = 0
     else:
