@@ -47,13 +47,13 @@ def job_request():
 def log_work(content):
     url = "http://detection.diopthe20.com/status/"
 
-    payload = json.dumps({"id": 1, "status": "test"})
+    payload = json.dumps({"id": 1, "status": content})
     headers = {"Content-Type": "application/json"}
 
     requests.request("POST", url, headers=headers, data=payload)
 
 
-
+a  = 0 
 while True:
     image = pyautogui.screenshot()
 
@@ -64,6 +64,7 @@ while True:
     t2 = timer()
     print("Time taken: ", t2 - t1)
     print(result)
+
     if result["data"] != None:
         x1, y1, x2, y2 = result["data"]
         pyautogui.moveTo(
@@ -73,8 +74,14 @@ while True:
             pyautogui.easeInOutQuad,
         )
         pyautogui.click()
-        log_work("Current work: {} {} {} {}".format(x1, y1, x2, y2))
+        
         time.sleep(2)
+        a = 0
     else:
+        if a == 5:
+            a = 0
+            random_move()
+        a += 1
         log_work("No Fiber Found")
         time.sleep(1)
+            
