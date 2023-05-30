@@ -80,7 +80,7 @@ while True:
     else:
         if a == 5:
             a = 0
-            random_move()
+            # random_move()
         a += 1
         log_work("No Fiber Found")
         time.sleep(1)
