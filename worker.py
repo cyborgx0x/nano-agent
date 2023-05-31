@@ -13,7 +13,8 @@ def get_server():
     payload = {}
     headers = {}
     response = requests.request("GET", url, headers=headers, data=payload)
-    return response.text
+    
+    return response.json()
 
 def random_move():
     pyautogui.moveTo(
@@ -39,7 +40,7 @@ def get_predict(server, image):
     files = {"file": ("screen.jpg", image_bytes, "image/jpg")}
     headers = {}
     url = f"{server}/fiber_detection/"
-
+    print(url)
     try:
         response = requests.post(url, files=files, headers=headers)
         return response.json()
@@ -73,25 +74,25 @@ while True:
     print(result)
     try:
         result["data"]
+        if result["data"] != None:
+            x1, y1, x2, y2 = result["data"]
+            pyautogui.moveTo(
+                math.ceil((x1 + x2) / 2),
+                math.ceil((y1 + y2) / 2),
+                0.5,
+                pyautogui.easeInOutQuad,
+            )
+            pyautogui.click()
+            log_work(server, f"{x1}, {y1}, {x2}, {y2}")
+            time.sleep(2)
+            a = 0
+        else:
+            if a == 5:
+                a = 0
+                # random_move()
+            a += 1
+            log_work("No Fiber Found")
+            time.sleep(1)
     except:
         server = get_server()
-    if result["data"] != None:
-        x1, y1, x2, y2 = result["data"]
-        pyautogui.moveTo(
-            math.ceil((x1 + x2) / 2),
-            math.ceil((y1 + y2) / 2),
-            0.5,
-            pyautogui.easeInOutQuad,
-        )
-        pyautogui.click()
-        log_work(server, f"{x1}, {y1}, {x2}, {y2}")
-        time.sleep(2)
-        a = 0
-    else:
-        if a == 5:
-            a = 0
-            # random_move()
-        a += 1
-        log_work("No Fiber Found")
-        time.sleep(1)
             
