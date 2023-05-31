@@ -31,7 +31,7 @@ def get_predict(image):
     image_bytes.seek(0)
     files = {"file": ("screen.jpg", image_bytes, "image/jpg")}
     headers = {}
-    url = "https://amy-alt-id-deficit.trycloudflare.com/fiber_detection/"
+    url = "https://tampa-campaign-periodically-administration.trycloudflare.com/fiber_detection/"
 
     try:
         response = requests.post(url, files=files, headers=headers)
@@ -45,7 +45,7 @@ def job_request():
 
 
 def log_work(content):
-    url = "https://amy-alt-id-deficit.trycloudflare.com/status/"
+    url = "https://tampa-campaign-periodically-administration.trycloudflare.com/status/"
 
     payload = json.dumps({"id": 1, "status": content})
     headers = {"Content-Type": "application/json"}
