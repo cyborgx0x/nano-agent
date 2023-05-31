@@ -8,6 +8,13 @@ import requests
 import json
 
 
+def get_server():
+    url = "https://sv.diopthe20.com/"
+    payload = {}
+    headers = {}
+    response = requests.request("GET", url, headers=headers, data=payload)
+    return response.text
+
 def random_move():
     pyautogui.moveTo(
         random.choice(range(1, 1920)),
@@ -23,7 +30,7 @@ def mount_up():
     pyautogui.press("a")
 
 
-def get_predict(image):
+def get_predict(server, image):
     from io import BytesIO
 
     image_bytes = BytesIO()
@@ -31,7 +38,7 @@ def get_predict(image):
     image_bytes.seek(0)
     files = {"file": ("screen.jpg", image_bytes, "image/jpg")}
     headers = {}
-    url = "https://checked-cop-marsh-closely.trycloudflare.com/fiber_detection/"
+    url = f"{server}/fiber_detection/"
 
     try:
         response = requests.post(url, files=files, headers=headers)
@@ -44,15 +51,15 @@ def job_request():
     pass
 
 
-def log_work(content):
-    url = "https://checked-cop-marsh-closely.trycloudflare.com/status/"
+def log_work(server, content):
+    url = f"{server}/status/"
 
     payload = json.dumps({"id": 1, "status": content})
     headers = {"Content-Type": "application/json"}
 
     requests.request("POST", url, headers=headers, data=payload)
 
-
+server = get_server()
 a  = 0 
 while True:
     image = pyautogui.screenshot()
@@ -60,11 +67,14 @@ while True:
     from timeit import default_timer as timer
 
     t1 = timer()
-    result = get_predict(image=image)
+    result = get_predict(server, image=image)
     t2 = timer()
     print("Time taken: ", t2 - t1)
     print(result)
-
+    try:
+        result["data"]
+    except:
+        server = get_server()
     if result["data"] != None:
         x1, y1, x2, y2 = result["data"]
         pyautogui.moveTo(
@@ -74,7 +84,7 @@ while True:
             pyautogui.easeInOutQuad,
         )
         pyautogui.click()
-        log_work(f"{x1}, {y1}, {x2}, {y2}")
+        log_work(server, f"{x1}, {y1}, {x2}, {y2}")
         time.sleep(2)
         a = 0
     else:
