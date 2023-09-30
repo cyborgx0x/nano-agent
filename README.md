@@ -1,6 +1,10 @@
-# nanobot
+# nanobot - Autonomous on Playing and interacting with game from screenshot only
 
-an AI to cooperate and play albion online
+```
+git clone https://github.com/diopthe20/nanobot
+git submodule update --init --recursive
+
+```
 
 # TODO
 
