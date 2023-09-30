@@ -1,5 +1,10 @@
 # nanobot
+
 an AI to cooperate and play albion online
+
+# TODO
+
+- Develop a deployment strategy
 
 # PIPELINE
 

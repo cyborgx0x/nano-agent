@@ -1,0 +1,9 @@
+[submodule "albion-infer-server"]
+	path = albion-infer-server
+	url = https://github.com/cyborgx0x/albion-infer-server.git
+[submodule "albion_pathfinder"]
+	path = albion_pathfinder
+	url = https://github.com/cyborgx0x/albion-pathfinder
+[submodule "bot_trainer"]
+	path = bot_trainer
+	url = https://github.com/cyborgx0x/bot_trainer.git
