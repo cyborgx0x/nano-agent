@@ -148,6 +148,7 @@
   },
   "active": "463490b23185e00a",
   "lastOpenFiles": [
+    "requirements.txt",
     "README.md",
     "bot_trainer/yolov8n.pt",
     "bot_trainer/run.py",

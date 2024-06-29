@@ -17,12 +17,18 @@ We will use some vision model to get the information about what we will see in t
 | ----------------------------------------------------------------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [llama-3-vision-alpha](https://huggingface.co/qresearch/llama-3-vision-alpha) |        | projection module trained to add vision capabilties to Llama 3 using SigLIP. built by [@yeswondwerr](https://x.com/yeswondwerr) and [@qtnx_](https://x.com/qtnx_) |
 
+### OCR 
+
+I used EasyOCR for recognize some text in the screen during gathering. 
+You can go to https://huggingface.co/spaces/tomofi/EasyOCR to test with EasyOCR
 ### Event Handling
 
 We take the environment state as an event and send it to event handler
 
 
-# PIPELINE
+## Object Detection
+
+
 
 Label with Label Studio, Export to YOLO Format and then Upload to ROBOFLOW to export to the right format for YOLO
 
