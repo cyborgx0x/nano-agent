@@ -1,6 +1,6 @@
-torch --index-url https://download.pytorch.org/whl/cu118
-torchvision --index-url https://download.pytorch.org/whl/cu118
-torchaudio --index-url https://download.pytorch.org/whl/cu118
+torch -f https://download.pytorch.org/whl/cu118
+torchvision -f https://download.pytorch.org/whl/cu118
+torchaudio -f https://download.pytorch.org/whl/cu118
 ultralytics
 easyocr
 pyautogui
