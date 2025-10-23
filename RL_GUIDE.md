@@ -4,6 +4,7 @@ Complete guide for training RL agents to play Albion Online gathering using visi
 
 ## Table of Contents
 
+- [Prerequisites](#prerequisites)
 - [Overview](#overview)
 - [Architecture](#architecture)
 - [Quick Start](#quick-start)
@@ -13,6 +14,58 @@ Complete guide for training RL agents to play Albion Online gathering using visi
 - [Evaluation](#evaluation)
 - [Advanced Usage](#advanced-usage)
 - [Troubleshooting](#troubleshooting)
+
+## Prerequisites
+
+**⚠️  IMPORTANT**: The RL environment can run in two modes:
+
+### Option 1: Simulated Environment (Recommended for Starting)
+
+**No game required! Perfect for:**
+- Testing algorithms
+- Learning RL concepts
+- Quick iterations
+- Development
+
+```bash
+# Verify setup
+python verify_setup.py
+
+# Start training immediately
+python train_rl.py --algorithm dqn --timesteps 10000
+```
+
+**Requirements:**
+- Python 3.10+
+- Dependencies: `pip install -r requirements.txt requirements-training.txt`
+- That's it!
+
+### Option 2: Real Game Environment (For Production)
+
+**Requires actual Albion Online running:**
+- Game must be launched and visible
+- Character in gathering zone
+- `model.pt` file (YOLO model)
+- Full setup guide: **[SETUP.md](SETUP.md)**
+
+```bash
+# Verify all prerequisites
+python verify_setup.py
+
+# With game running:
+python train_rl.py --algorithm dqn --timesteps 50000
+```
+
+**Quick Check:**
+```bash
+# Check if ready to train
+python verify_setup.py
+
+# Test environment
+python game_env.py
+```
+
+**For detailed setup instructions, see [SETUP.md](SETUP.md)**
 
 ## Overview
 
