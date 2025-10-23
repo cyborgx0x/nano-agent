@@ -1,11 +1,11 @@
-# Makefile for YOLOv8 Finetuning Infrastructure
+# Makefile for YOLOv8 Finetuning and RL Training Infrastructure
 
 .PHONY: help build up down train jupyter tensorboard mlflow label-studio clean logs shell test
 
 help:
-	@echo "YOLOv8 Finetuning Infrastructure"
+	@echo "YOLOv8 Finetuning and RL Training Infrastructure"
 	@echo ""
-	@echo "Available commands:"
+	@echo "Service commands:"
 	@echo "  make build          - Build Docker images"
 	@echo "  make up             - Start all services"
 	@echo "  make down           - Stop all services"
@@ -19,10 +19,17 @@ help:
 	@echo "  make clean          - Clean up training outputs"
 	@echo "  make test           - Test GPU setup"
 	@echo ""
-	@echo "Training examples:"
+	@echo "YOLO training examples:"
 	@echo "  make train-quick    - Quick training test (10 epochs)"
 	@echo "  make train-full     - Full training (100 epochs)"
 	@echo "  make train-finetune - Finetune existing model"
+	@echo ""
+	@echo "RL training examples:"
+	@echo "  make rl-dqn         - Train DQN agent (recommended)"
+	@echo "  make rl-ppo         - Train PPO agent (stable)"
+	@echo "  make rl-a2c         - Train A2C agent (fast)"
+	@echo "  make rl-eval        - Evaluate trained RL agent"
+	@echo "  make rl-play        - Watch agent play one episode"
 
 build:
 	@echo "Building Docker images..."
@@ -130,3 +137,62 @@ count-dataset:
 	@echo "Val images: $$(find datasets/images/val -type f 2>/dev/null | wc -l)"
 	@echo "Train labels: $$(find datasets/labels/train -type f 2>/dev/null | wc -l)"
 	@echo "Val labels: $$(find datasets/labels/val -type f 2>/dev/null | wc -l)"
+
+# RL Training shortcuts
+rl-dqn:
+	@echo "Training DQN agent (50k timesteps)..."
+	docker-compose run --rm training python train_rl.py \
+		--algorithm dqn \
+		--timesteps 50000 \
+		--learning-rate 0.0001 \
+		--batch-size 32 \
+		--name dqn_agent
+
+rl-dqn-quick:
+	@echo "Quick DQN test (10k timesteps)..."
+	docker-compose run --rm training python train_rl.py \
+		--algorithm dqn \
+		--timesteps 10000 \
+		--name dqn_quick
+
+rl-ppo:
+	@echo "Training PPO agent (100k timesteps)..."
+	docker-compose run --rm training python train_rl.py \
+		--algorithm ppo \
+		--timesteps 100000 \
+		--learning-rate 0.0003 \
+		--name ppo_agent
+
+rl-a2c:
+	@echo "Training A2C agent (50k timesteps)..."
+	docker-compose run --rm training python train_rl.py \
+		--algorithm a2c \
+		--timesteps 50000 \
+		--learning-rate 0.0007 \
+		--name a2c_agent
+
+rl-eval:
+	@echo "Evaluating RL agent..."
+	@read -p "Enter model path: " model_path; \
+	docker-compose run --rm training python train_rl.py \
+		--mode eval \
+		--load-model $$model_path \
+		--n-episodes 10
+
+rl-play:
+	@echo "Playing one episode..."
+	@read -p "Enter model path: " model_path; \
+	docker-compose run --rm training python train_rl.py \
+		--mode play \
+		--load-model $$model_path \
+		--verbose 2
+
+rl-config:
+	@echo "Training with config file..."
+	docker-compose run --rm training python train_rl.py \
+		--config config/rl_config.yaml
+
+# Test RL environment
+test-env:
+	@echo "Testing RL environment..."
+	docker-compose run --rm training python game_env.py

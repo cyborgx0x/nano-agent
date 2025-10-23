@@ -1,0 +1,75 @@
+# Deep RL Configuration for Albion Online Gathering
+# Configuration for training reinforcement learning agents
+
+# Algorithm selection
+algorithm: dqn  # Options: dqn, ppo, a2c
+
+# Environment settings
+env_type: simplified  # Options: simplified, full
+model_path: model.pt  # YOLO detection model
+
+# Training parameters
+timesteps: 50000  # Total training timesteps
+learning_rate: 0.0001  # Learning rate
+batch_size: 32  # Batch size
+buffer_size: 10000  # Replay buffer size (for DQN)
+gamma: 0.99  # Discount factor
+
+# Checkpointing and evaluation
+checkpoint_freq: 5000  # Save checkpoint every N steps
+eval_freq: 5000  # Evaluate every N steps
+eval_episodes: 5  # Number of episodes for evaluation
+
+# Output directories
+log_dir: logs/rl  # Directory for logs and TensorBoard
+save_dir: models/rl  # Directory for saved models
+name: exp  # Experiment name
+
+# Device
+device: auto  # Options: auto, cuda, cpu
+
+# Verbosity
+verbose: 1  # 0: silent, 1: info, 2: debug
+
+# Random seed (optional)
+seed: null  # Set to integer for reproducibility
+
+# DQN-specific parameters (when algorithm=dqn)
+dqn:
+  exploration_fraction: 0.3  # Fraction of training for exploration
+  exploration_initial_eps: 1.0  # Initial epsilon for exploration
+  exploration_final_eps: 0.05  # Final epsilon
+  learning_starts: 1000  # Start learning after N steps
+  target_update_interval: 500  # Update target network every N steps
+
+# PPO-specific parameters (when algorithm=ppo)
+ppo:
+  n_steps: 2048  # Number of steps per update
+  n_epochs: 10  # Number of epochs for policy update
+  clip_range: 0.2  # Clipping parameter
+  ent_coef: 0.01  # Entropy coefficient
+
+# A2C-specific parameters (when algorithm=a2c)
+a2c:
+  n_steps: 5  # Number of steps per update
+  ent_coef: 0.01  # Entropy coefficient
+
+# Environment-specific settings
+environment:
+  max_steps: 500  # Maximum steps per episode
+  confidence_threshold: 0.7  # YOLO confidence threshold
+
+# Reward shaping
+rewards:
+  time_penalty: -0.1  # Penalty per time step
+  gather_reward: 5.0  # Reward for gathering item
+  episode_complete: 50.0  # Bonus for filling inventory
+  failed_action: -0.5  # Penalty for failed action
+
+# Notes:
+# - DQN is good for discrete actions and has a replay buffer
+# - PPO is more stable and widely used, but slower
+# - A2C is faster but less stable than PPO
+# - Simplified environment has 5 features (faster training)
+# - Full environment has 63 features (more information)
+# - Start with simplified environment and DQN for quick results

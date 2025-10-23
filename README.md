@@ -1,14 +1,42 @@
-# nanobot - Autonomous on Playing and interacting with game from screenshot only
+# Nano-Agent - Autonomous Game Bot with Deep Reinforcement Learning
 
-```
+Autonomous AI agent for playing Albion Online using computer vision and deep reinforcement learning.
+
+## Features
+
+🤖 **Deep RL Agent** - Learns to play using DQN, PPO, or A2C algorithms
+👁️ **Multi-Sensor Fusion** - Combines YOLO object detection + OCR text recognition
+🐳 **Docker Infrastructure** - Complete training environment with GPU support
+📊 **Experiment Tracking** - TensorBoard, MLflow, and Jupyter integration
+🎮 **Game Automation** - Autonomous resource gathering in Albion Online
+
+## Quick Start
+
+```bash
+# Clone repository
 git clone https://github.com/diopthe20/nanobot
 git submodule update --init --recursive
 
+# Train RL agent (Simple method)
+python train_rl.py --algorithm dqn --timesteps 50000
+
+# Or use Docker
+docker-compose run --rm training python train_rl.py --algorithm dqn --timesteps 50000
+
+# Monitor training
+tensorboard --logdir=logs/rl
 ```
+
+## Documentation
+
+- **[RL_GUIDE.md](RL_GUIDE.md)** - Complete guide for training RL agents
+- **[TRAINING.md](TRAINING.md)** - Guide for finetuning YOLO detection model
+- **[examples/rl_example.py](examples/rl_example.py)** - Code examples
 
 ### TODO
 
 - Develop a deployment strategy
+- Integrate RL agent with production bot
 
 ### Vision model
 We will use some vision model to get the information about what we will see in the screen
