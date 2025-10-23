@@ -1,0 +1,63 @@
+# Git
+.git
+.gitignore
+.gitmodules
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Obsidian
+.obsidian/
+
+# Training outputs (these are volume-mounted)
+runs/
+models/
+logs/
+mlruns/
+
+# Large data directories (volume-mounted)
+datasets/
+label-studio-data/
+notebooks/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+*.md
+!README.md
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Git submodules
+albion-infer-server/
+albion_pathfinder/
+bot_trainer/

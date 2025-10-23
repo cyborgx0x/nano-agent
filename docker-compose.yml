@@ -1,0 +1,120 @@
+version: '3.8'
+
+services:
+  # Main training service with GPU support
+  training:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nano-agent-training:latest
+    container_name: nano-agent-training
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - CUDA_VISIBLE_DEVICES=0
+    volumes:
+      # Mount project directory
+      - .:/workspace
+      # Mount datasets directory
+      - ./datasets:/workspace/datasets
+      # Mount training runs
+      - ./runs:/workspace/runs
+      # Mount models directory
+      - ./models:/workspace/models
+      # Mount logs
+      - ./logs:/workspace/logs
+    working_dir: /workspace
+    command: /bin/bash
+    stdin_open: true
+    tty: true
+    shm_size: '8gb'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # Jupyter notebook for experimentation
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nano-agent-training:latest
+    container_name: nano-agent-jupyter
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - JUPYTER_ENABLE_LAB=yes
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/workspace
+      - ./datasets:/workspace/datasets
+      - ./runs:/workspace/runs
+      - ./models:/workspace/models
+      - ./notebooks:/workspace/notebooks
+    working_dir: /workspace
+    command: >
+      bash -c "jupyter lab --ip=0.0.0.0 --port=8888 --no-browser
+      --allow-root --NotebookApp.token='' --NotebookApp.password=''"
+    shm_size: '8gb'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # TensorBoard for monitoring training
+  tensorboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nano-agent-training:latest
+    container_name: nano-agent-tensorboard
+    ports:
+      - "6006:6006"
+    volumes:
+      - ./runs:/workspace/runs
+    working_dir: /workspace
+    command: tensorboard --logdir=/workspace/runs --host=0.0.0.0 --port=6006
+    restart: unless-stopped
+
+  # MLflow for experiment tracking (optional)
+  mlflow:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nano-agent-training:latest
+    container_name: nano-agent-mlflow
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlruns:/workspace/mlruns
+      - ./models:/workspace/models
+    working_dir: /workspace
+    command: mlflow ui --host=0.0.0.0 --port=5000
+    restart: unless-stopped
+
+  # Label Studio for data annotation (optional)
+  label-studio:
+    image: heartexlabs/label-studio:latest
+    container_name: nano-agent-labelstudio
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./label-studio-data:/label-studio/data
+      - ./datasets:/datasets
+    environment:
+      - LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true
+      - LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/datasets
+    restart: unless-stopped
+
+networks:
+  default:
+    name: nano-agent-network

@@ -1,0 +1,56 @@
+# YOLOv8 Dataset Configuration for Albion Online Resource Detection
+# This file defines the dataset structure for training and validation
+
+# Dataset path (relative to this file or absolute)
+path: ../datasets  # Root directory
+
+# Train and validation image directories
+train: images/train
+val: images/val
+test: images/test  # optional
+
+# Number of classes
+nc: 3
+
+# Class names (must match annotation labels)
+names:
+  0: cotton  # T2 fiber resource
+  1: flax    # T3 fiber resource
+  2: hemp    # T4 fiber resource
+
+# Dataset info
+info:
+  description: "Albion Online fiber resource detection dataset"
+  version: "1.0"
+  created: "2025-10-23"
+  game: "Albion Online"
+  resource_types:
+    - cotton: "Tier 2 fiber (lowest value)"
+    - flax: "Tier 3 fiber (medium value)"
+    - hemp: "Tier 4 fiber (highest value)"
+
+# Notes:
+# - Images should be in JPEG or PNG format
+# - Labels should be in YOLO format (.txt files)
+# - Each image should have a corresponding label file with the same name
+# - Label format: <class_id> <x_center> <y_center> <width> <height>
+# - All coordinates are normalized to [0, 1]
+#
+# Example directory structure:
+# datasets/
+#   ├── images/
+#   │   ├── train/
+#   │   │   ├── img001.jpg
+#   │   │   ├── img002.jpg
+#   │   │   └── ...
+#   │   └── val/
+#   │       ├── img101.jpg
+#   │       └── ...
+#   └── labels/
+#       ├── train/
+#       │   ├── img001.txt
+#       │   ├── img002.txt
+#       │   └── ...
+#       └── val/
+#           ├── img101.txt
+#           └── ...
