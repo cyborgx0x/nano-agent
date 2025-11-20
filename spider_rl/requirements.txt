@@ -1,0 +1,24 @@
+# Spider RL Training Requirements
+#
+# Note: This assumes you have NVIDIA Isaac Lab (or Isaac Gym) already installed
+# Isaac Lab installation: https://isaac-sim.github.io/IsaacLab/
+
+# Core dependencies
+torch>=2.0.0
+numpy>=1.23.0
+pyyaml>=6.0
+
+# RL algorithms
+rsl_rl>=1.0.2  # RSL-RL (Isaac Lab native)
+# Alternative: rl_games>=1.6.0
+
+# Logging and visualization
+tensorboard>=2.11.0
+matplotlib>=3.5.0
+
+# Optional: for video recording
+# opencv-python>=4.7.0
+# imageio>=2.25.0
+
+# Utilities
+tqdm>=4.64.0

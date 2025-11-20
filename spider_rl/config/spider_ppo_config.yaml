@@ -1,0 +1,115 @@
+# PPO Training Configuration for Spider Standing Task
+# Uses RSL-RL (Isaac Lab native RL library)
+
+# Random seed for reproducibility
+seed: 42
+
+# Environment configuration
+env:
+  num_envs: 4096
+  episode_length_s: 10.0
+
+# Algorithm: PPO (Proximal Policy Optimization)
+algorithm:
+  name: "PPO"
+
+  # Value function fitting
+  value_loss_coef: 1.0
+  use_clipped_value_loss: true
+  clip_param: 0.2
+  entropy_coef: 0.01
+  num_learning_epochs: 5
+  num_mini_batches: 4
+  learning_rate: 3.0e-4
+  schedule: "adaptive"  # adaptive learning rate
+  gamma: 0.99
+  lam: 0.95
+  desired_kl: 0.01
+  max_grad_norm: 1.0
+
+# Policy network architecture
+policy:
+  class_name: "ActorCritic"
+
+  # MLP architecture for both actor and critic
+  init_noise_std: 1.0
+  actor_hidden_dims: [512, 256, 128]
+  critic_hidden_dims: [512, 256, 128]
+  activation: "elu"
+
+# Runner configuration
+runner:
+  # Training configuration
+  max_iterations: 5000
+  save_interval: 50
+
+  # Logging configuration
+  experiment_name: "spider_standing_phase1"
+  run_name: ""  # Auto-generated based on timestamp
+
+  # Empirical normalization of inputs
+  empirical_normalization: false
+
+  # Resume training
+  resume: false
+  resume_path: null
+  load_run: null
+  load_checkpoint: null
+
+  # Checkpointing
+  checkpoint_path: "./spider_rl/logs"
+
+# Evaluation settings
+eval:
+  evaluate: false
+  eval_interval: 50
+  num_eval_envs: 128
+  save_video: false
+
+# Device settings
+device: "cuda:0"  # Use GPU 0
+
+# Logging settings
+logging:
+  # Log to tensorboard
+  log_dir: "./spider_rl/logs/tensorboard"
+
+  # Custom metrics to log
+  custom_metrics:
+    - "standing_success_rate"
+    - "avg_torso_height"
+    - "avg_tilt_deg"
+
+  # Console logging
+  print_log_interval: 10  # Print every 10 iterations
+  log_interval: 1  # Write to tensorboard every iteration
+
+# Replay buffer (not used in on-policy PPO, but included for completeness)
+buffer:
+  num_transitions_per_env: 24  # Steps per rollout (episode_length / decimation)
+
+# Observation and action space configuration
+spaces:
+  observation_dim: 153  # Total observation dimension
+  action_dim: 24  # 24 joint position targets
+
+# Training hyperparameters tuned for standing task
+training:
+  # Number of steps to collect per iteration
+  num_steps_per_env: 24
+
+  # Early stopping
+  early_stop_reward: 8.0  # Stop if average reward exceeds this
+
+  # Curriculum learning (optional, disabled by default)
+  curriculum:
+    enabled: false
+
+# Domain randomization settings (configured in env, listed here for reference)
+domain_randomization:
+  mass_randomization: 0.4  # ±40%
+  friction_range: [0.5, 1.5]
+  damping_randomization: 0.5  # ±50%
+  push_interval_range: [3.0, 5.0]  # seconds
+  push_force_range: [10.0, 80.0]  # Newtons
+  actuator_delay_range: [0.01, 0.03]  # 10-30 ms
