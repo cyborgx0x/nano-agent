@@ -1,0 +1,27 @@
+version: '2'
+services:
+  nginx:
+    restart: always
+    build: ./nginx/
+    ports:
+      - "82:80"
+    volumes:
+      - /www/static/
+    volumes_from:
+      - web
+    links:
+      - web:web
+    depends_on:
+      - web
+  web:
+    restart: always
+    build: .
+    command: uvicorn main:app --port 8000
+    volumes:
+      - .:/code
+    expose:
+      - "8000"
+    # ports:
+    #   - "8090:8000"
+    env_file:
+      - .env

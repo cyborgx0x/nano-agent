@@ -1,0 +1,8 @@
+# Minimal requirements for the prototype runner
+# Note: install PyTorch separately following https://pytorch.org/get-started/locally/
+
+mss
+opencv-python
+Pillow
+pyautogui
+timm

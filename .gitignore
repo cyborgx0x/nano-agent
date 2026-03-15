@@ -152,6 +152,26 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+# Training artifacts (moved to data/nano-agent/)
+runs/
+wandb/
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.safetensors
+
+# Images / generated outputs (moved to data/nano-agent/)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.webp
+
+# Large binary artifacts (moved to data/nano-agent/)
+*.pkl
+
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore

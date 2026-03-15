@@ -21,9 +21,9 @@ import time
 import numpy as np
 import pyautogui
 
-from fiber_detection import get_detection_fiber
-from gather_state import get_gather_state
-from value_sort import sort_resource_by_value
+from agent.fiber_detection import get_detection_fiber
+from agent.gather_state import get_gather_state
+from agent.value_sort import sort_resource_by_value
 
 # Disable PyAutoGUI's safety feature (moving mouse to corner stops script)
 # WARNING: In production, you might want this enabled for safety

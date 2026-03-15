@@ -1,6 +1,21 @@
-torch -f https://download.pytorch.org/whl/cu118
-torchvision -f https://download.pytorch.org/whl/cu118
-torchaudio -f https://download.pytorch.org/whl/cu118
+--extra-index-url https://download.pytorch.org/whl/cu118
+torch
+torchvision
+torchaudio
 ultralytics
 easyocr
 pyautogui
+
+# Prototype extras
+mss>=9.0.0
+opencv-python>=4.8.0
+torchvision
+
+# World model dependencies
+opencv-python>=4.8.0
+mss>=9.0.0
+pynput>=1.7.6
+timm>=0.9.0
+einops>=0.7.0
+scipy>=1.11.0
+pyyaml>=6.0
