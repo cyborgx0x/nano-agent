@@ -80,8 +80,10 @@ class AlbionStateSim:
             0  # ticks after zone transition before gate re-interactable
         )
 
-        # Vision radius
-        self._vision_radius = 0.30  # entities within this radius are "observed"
+        # Vision radius / observation mode
+        self.observation_mode = "partial"
+        self._partial_vision_radius = 0.30
+        self._vision_radius = self._partial_vision_radius  # observed entities
 
         # Exploration / stagnation tracking
         self._exploration_grid_size = 10
@@ -153,6 +155,20 @@ class AlbionStateSim:
                 f"unknown task_type: {task_type}. valid={list(self.task_type_to_id.keys())}"
             )
         self.task_type = task_type
+
+    def set_observation_mode(self, mode: str) -> None:
+        """Switch between partial observed view and full top-down view.
+
+        - "partial": agent observes entities within the default vision radius.
+        - "full": agent observes every entity in the current zone.
+        """
+        if mode not in ("partial", "full"):
+            raise ValueError(
+                f"unknown observation mode: {mode}. valid=['partial', 'full']"
+            )
+        self.observation_mode = mode
+        # 2.0 exceeds the max distance inside the unit map, so "full" reveals all.
+        self._vision_radius = 2.0 if mode == "full" else self._partial_vision_radius
 
     def _infer_fsm_state(self) -> str:
         if self.navigation_task_enabled or self.task_type == "navigation":
@@ -744,11 +760,12 @@ class AlbionStateSim:
         dict[str, float | int | str | bool],
         float,
         bool,
-        dict[str, float | int | bool | str],
+        dict[str, object],
     ]:
         if not self.state.alive:
             return self._obs(), 0.0, True, {"reason": "agent_dead"}
 
+        zone_before = self.state.zone_id
         distance_before = self._zone_distance(
             self.state.zone_id, self.navigation_goal_zone
         )
@@ -928,7 +945,7 @@ class AlbionStateSim:
         if self.navigation_task_enabled and self.navigation_complete:
             done = True
 
-        info: dict[str, float | int | bool | str] = {
+        info: dict[str, object] = {
             "phase": self.phase.name,
             "resource_gain": resource_gain,
             "xp_gain": xp_gain,
@@ -950,6 +967,13 @@ class AlbionStateSim:
             / max(1, self._exploration_grid_size**2),
             "stagnation_ticks": float(self._stagnation_ticks),
         }
+
+        if self.state.zone_id != zone_before:
+            info["transition_event"] = {
+                "from_zone": zone_before,
+                "to_zone": self.state.zone_id,
+                "step": self.state.step_count,
+            }
 
         if done:
             info.update(self.episode_metrics())
