@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: Lấy mã nguồn
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Khởi tạo CodeQL
         uses: github/codeql-action/init@v3
