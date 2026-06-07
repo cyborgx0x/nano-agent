@@ -1,0 +1,21 @@
+version: 2
+# Cập nhật phụ thuộc tự động (bảo mật + giữ phiên bản mới).
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    labels: [dependencies, ci]
+
+  # Phụ thuộc Python chính (pyproject.toml + requirements.txt ở gốc)
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+    labels: [dependencies, python]
+
+  - package-ecosystem: pip
+    directory: "/components/albion-infer-server"
+    schedule:
+      interval: weekly
+    labels: [dependencies, python]
