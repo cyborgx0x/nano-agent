@@ -1,0 +1,40 @@
+name: CodeQL
+
+# Quét bảo mật + chất lượng mã bằng CodeQL (miễn phí cho repo public).
+# Chạy trên push/PR vào main và theo lịch hằng tuần.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "27 3 * * 1" # 03:27 UTC mỗi thứ Hai
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    name: Phân tích (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [python, actions]
+
+    steps:
+      - name: Lấy mã nguồn
+        uses: actions/checkout@v4
+
+      - name: Khởi tạo CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-and-quality
+
+      - name: Phân tích
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"
