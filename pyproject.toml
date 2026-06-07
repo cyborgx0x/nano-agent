@@ -9,7 +9,7 @@ dependencies = [
 	"einops>=0.7.0",
 	"mss>=9.0.0",
 	"numpy",
-	"opencv-python>=4.8.0",
+	"opencv-python>=4.13.0.92",
 	"pillow",
 	"pyautogui",
 	"pynput>=1.7.6",
