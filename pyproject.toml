@@ -12,7 +12,7 @@ dependencies = [
 	"opencv-python>=4.8.0",
 	"pillow",
 	"pyautogui",
-	"pynput>=1.7.6",
+	"pynput>=1.8.2",
 	"pyyaml>=6.0",
 	"scipy>=1.11.0",
 	"timm>=0.9.0",
