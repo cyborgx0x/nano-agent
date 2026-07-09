@@ -1,9 +1,7 @@
 # nanobot - Autonomous on Playing and interacting with game from screenshot only
 
 ```
-git clone https://github.com/diopthe20/nanobot
-git submodule update --init --recursive
-
+git clone https://github.com/cyborgx0x/nano-agent
 ```
 
 ### TODO

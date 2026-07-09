@@ -1,6 +1,0 @@
-[submodule "research"]
-	path = research
-	url = git@github.com:cyborgx0x/research.git
-[submodule "secbox"]
-	path = secbox
-	url = git@github.com:cyborgx0x/secbox.git
