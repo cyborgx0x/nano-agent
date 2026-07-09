@@ -7,13 +7,13 @@ easyocr
 pyautogui
 
 # Prototype extras
-mss>=9.0.0
+mss>=10.2.0
 opencv-python>=4.8.0
 torchvision
 
 # World model dependencies
 opencv-python>=4.8.0
-mss>=9.0.0
+mss>=10.2.0
 pynput>=1.7.6
 timm>=0.9.0
 einops>=0.7.0
