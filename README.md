@@ -124,3 +124,7 @@ uv run --extra cu118 --extra render --extra train python state_sim/evaluate_ppo.
 - `cpu` and `cu118` extras are mutually exclusive.
 - If CUDA build fails on your machine, switch to `uv sync --extra cpu`.
 - `state_sim` render will try OpenCV window first; if GUI backend is unavailable (`GUI: NONE`), it will fallback to matplotlib live window.
+
+## Tài liệu
+
+Tài liệu của repo này nằm trong kho tài liệu tập trung [`cyborgx0x/projects`](https://github.com/cyborgx0x/projects), khu vực [`70-79-ai-agent-consulting`](https://github.com/cyborgx0x/projects/blob/main/70-79-ai-agent-consulting) (module `nano-agent`). Quy ước tổ chức: `00-09-system/01-conventions/01.01-quy-uoc-to-chuc-tai-lieu.md`.
