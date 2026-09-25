@@ -127,4 +127,4 @@ uv run --extra cu118 --extra render --extra train python state_sim/evaluate_ppo.
 
 ## Tài liệu
 
-Tài liệu của repo này nằm trong kho tài liệu tập trung [`cyborgx0x/projects`](https://github.com/cyborgx0x/projects), khu vực [`70-79-ai-agent-consulting`](https://github.com/cyborgx0x/projects/blob/main/70-79-ai-agent-consulting) (module `nano-agent`). Quy ước tổ chức: `00-09-system/01-conventions/01.01-quy-uoc-to-chuc-tai-lieu.md`.
+Tài liệu thiết kế, nghiên cứu và hướng dẫn nằm trong thư mục [`docs/`](docs/) của repo này.
